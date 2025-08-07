@@ -4,7 +4,7 @@
 .terminal-typewriter {
   background-color: #000;
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(1rem, 2.5vw, 2rem); /* Responsive text size only */
+  font-size: clamp(0.8rem, 2vw, 1.5rem);  /* Responsive text size only */
   padding: 1rem 1.5rem;
   border-radius: 20px;
   display: block;
