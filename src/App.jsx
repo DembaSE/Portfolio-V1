@@ -10,7 +10,7 @@ import GalaxyBackground from './assets/canvas/GalaxyBackground';
 import WelcomeSection from './assets/components/WelcomeSection';
 import InfoCardsSection from './assets/components/InfoCardsSection';
 
-// --- Slide to Unlock Component ---
+// Slide to Unlock Component
 function SlideToUnlock({ onUnlock }) {
   const x = useMotionValue(0);
   const trackRef = useRef(null);
@@ -18,7 +18,7 @@ function SlideToUnlock({ onUnlock }) {
 
   useEffect(() => {
     if (trackRef.current) {
-      setTrackWidth(trackRef.current.offsetWidth - 60); // slider handle width
+      setTrackWidth(trackRef.current.offsetWidth - 60);
     }
   }, []);
 
@@ -69,7 +69,6 @@ function SlideToUnlock({ onUnlock }) {
       >
         Demba's Portfolio
       </h1>
-
       <motion.div
         ref={trackRef}
         style={{
@@ -102,8 +101,6 @@ function SlideToUnlock({ onUnlock }) {
           onDragEnd={handleDragEnd}
           whileTap={{ scale: 1.1 }}
         />
-
-        {/* --- Updated Shimmering Text --- */}
         <div
           style={{
             position: 'absolute',
@@ -123,27 +120,34 @@ function SlideToUnlock({ onUnlock }) {
             whiteSpace: 'nowrap',
           }}
         >
-          → Slide to Unlock 
+          → Slide to Unlock
         </div>
-
-        {/* Keyframes for shimmer effect */}
-        <style>{`
-          @keyframes shine {
-            0% {
-              background-position: -200% center;
-            }
-            100% {
-              background-position: 200% center;
-            }
-          }
-        `}</style>
       </motion.div>
     </motion.div>
   );
 }
 
+// Loading Spinner Component
+function LoadingSpinner() {
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+        width: 40,
+        height: 40,
+        border: '4px solid #00ccff',
+        borderTop: '4px solid transparent',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite',
+        zIndex: 10000,
+      }}
+    />
+  );
+}
 
-// --- Other Scene Components ---
+// Scene Components
 function SceneBackground() {
   const { scene } = useThree();
   useFrame(() => {
@@ -172,37 +176,39 @@ function Lights() {
   );
 }
 
-function Model() {
+function Model({ setCanvasLoaded }) {
   const gltf = useLoader(GLTFLoader, '/models/earth.glb');
   const mixer = useRef();
   const { viewport } = useThree();
-
   const minScale = 1.9;
-  const maxScale = 6.5;
+  const maxScale = 6.2;
   const baseScale = 1.1;
   const dynamicScale = viewport.height * baseScale;
   const scale = Math.min(Math.max(dynamicScale, minScale), maxScale);
-
   const posX = 0;
-  const posY = -viewport.height * 4.0;
+  const posY = -viewport.height * 3.7;
   const posZ = -5;
-
   const rotX = -0.5;
   const rotY = -1.0;
   const rotZ = 0.09;
 
   useEffect(() => {
+    if (gltf) {
+      setCanvasLoaded(true);
+    }
+
     if (gltf.animations.length) {
       mixer.current = new THREE.AnimationMixer(gltf.scene);
       const action = mixer.current.clipAction(gltf.animations[0]);
       action.play();
     }
+
     return () => {
       if (mixer.current) {
         mixer.current.stopAllAction();
       }
     };
-  }, [gltf]);
+  }, [gltf, setCanvasLoaded]);
 
   useFrame((_, delta) => {
     mixer.current?.update(delta);
@@ -220,16 +226,18 @@ function Model() {
   );
 }
 
-// --- App Component ---
+// Main App
 export default function App() {
   const [unlocked, setUnlocked] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
 
   return (
     <div style={{ width: '100vw', height: '100vh', backgroundColor: '#0B1E3F' }}>
       <AnimatePresence>
-        {!unlocked && <SlideToUnlock key="lockscreen" onUnlock={() => setUnlocked(true)} />}
+        {!unlocked && (
+          <SlideToUnlock key="lockscreen" onUnlock={() => setUnlocked(true)} />
+        )}
       </AnimatePresence>
-
       <AnimatePresence>
         {unlocked && (
           <motion.div
@@ -245,6 +253,7 @@ export default function App() {
               zIndex: 0,
             }}
           >
+            {!canvasLoaded && <LoadingSpinner />}
             <Canvas
               camera={{ position: [0, 0, 3] }}
               style={{
@@ -258,39 +267,39 @@ export default function App() {
             >
               <SceneBackground />
               <Lights />
-              <Suspense fallback={null}>
-                <ScrollControls pages={4} damping={0.1}>
-                  <Scroll>
+              <ScrollControls pages={4} damping={0.1}>
+                <Scroll>
+                  <Suspense fallback={null}>
                     <GalaxyBackground />
                     <NameTitle />
-                    <Model />
-                  </Scroll>
-                  <Scroll html>
-                    <div style={{ position: 'relative', width: '100vw', height: '100vh', zIndex: 1 }}>
-                      <div style={{ width: '100vw', height: '100vh' }} id="TWO" />
-                      <div
-                        style={{
-                          width: '100vw',
-                          height: '60vh',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'flex-start',
-                          paddingTop: '30vh',
-                          paddingBottom: '10vh',
-                        }}
-                        id="THREE"
-                      >
-                        <WelcomeSection />
-                      </div>
-                      <div style={{ width: '100vw', height: '100vh' }} id="FOUR">
-                        <InfoCardsSection />
-                      </div>
+                    <Model setCanvasLoaded={setCanvasLoaded} />
+                  </Suspense>
+                </Scroll>
+                <Scroll html>
+                  <div style={{ position: 'relative', width: '100vw', height: '100vh', zIndex: 1 }}>
+                    <div style={{ width: '100vw', height: '100vh' }} id="TWO" />
+                    <div
+                      style={{
+                        width: '100vw',
+                        height: '60vh',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        paddingTop: '30vh',
+                        paddingBottom: '10vh',
+                      }}
+                      id="THREE"
+                    >
+                      <WelcomeSection />
                     </div>
-                  </Scroll>
-                  <CameraController />
-                </ScrollControls>
-                <CursorFollowCamera />
-              </Suspense>
+                    <div style={{ width: '100vw', height: '100vh' }} id="FOUR">
+                      <InfoCardsSection />
+                    </div>
+                  </div>
+                </Scroll>
+                <CameraController />
+              </ScrollControls>
+              <CursorFollowCamera />
             </Canvas>
           </motion.div>
         )}
@@ -298,3 +307,20 @@ export default function App() {
     </div>
   );
 }
+
+// Global CSS styles for spinner animation
+const styleElement = document.createElement('style');
+styleElement.textContent = `
+  @keyframes shine {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+`;
+document.head.appendChild(styleElement);
