@@ -154,9 +154,9 @@
 .modal-project {
   position: absolute;
   top: 5%; /* Keep it near the top */
-  left: 20%;
+  left: 18%;
   transform: translateX(-50%); /* Only horizontal centering */
-  width: 55%;
+  width: 61%;
   /* max-width: 900px; */
   height: 65%;
   background: rgba(255, 255, 255, 0.85);
@@ -206,6 +206,7 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+    margin-left: 20%;
   gap: 1rem;
 }
 
