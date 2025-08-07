@@ -153,11 +153,12 @@
 
 .modal-project {
   position: absolute;
-  top: 5%; /* Keep it near the top */
+  top: 13%; /* Keep it near the top */
   left: 18%;
   transform: translateX(-50%); /* Only horizontal centering */
   width: 61%;
   /* max-width: 900px; */
+
   height: 65%;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px) saturate(180%);

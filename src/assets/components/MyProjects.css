@@ -4,7 +4,7 @@
   font-family: 'Arial', sans-serif;
   text-align: center;
   width: 99%;
-  max-width: 90vh;
+  max-width: 95vh;
   height: auto;
   max-height: 90vh;
   overflow: hidden; /* no scroll here */
@@ -262,7 +262,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 580px) {
   .glass-modal-title {
     font-size: 2.2rem;
   }
@@ -293,7 +293,7 @@
   flex-grow: 1;
   width: 100%;
   overflow-y: auto;
-  padding-right: 8px;/* Space for scrollbar */
+  padding-left: 4%;/* Space for scrollbar */
   /* padding-top:1%; */
   /* box-sizing: border-box; */
 }
