@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import experienceImg from '../Experience.png';
 import outpost24Img from '../Outpost24.png';
-import soolizyImg from '../Soolizy.png';
+import soolizyImg from '../soolizy.png';
 import paIcon from "../PA-icon.png";
 import './MyExperience.css'
 
