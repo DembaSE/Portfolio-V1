@@ -9,7 +9,7 @@ import educationImg from '../Education.png';
 import contactImg from '../Contact2.png';
 import MyEducation from './MyEducation.jsx';
 import MyContact from './MyContact.jsx';
-import MyExperience from './myExperience.jsx';
+import MyExperience from './MyExperience.jsx';
 
 
 export default function InfoCardsSection() {
