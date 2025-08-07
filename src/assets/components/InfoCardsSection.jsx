@@ -11,6 +11,7 @@ import MyEducation from './MyEducation';
 import MyContact from './MyContact';
 import MyExperience from './myExperience';
 
+
 export default function InfoCardsSection() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [modalContent, setModalContent] = useState(null);
