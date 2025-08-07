@@ -1,0 +1,320 @@
+.glass-modal-content {
+  position: relative;
+  padding: 2.5rem 2rem;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  height: auto;
+  max-height: 90vh;
+  overflow: hidden; /* no scroll here */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInScale 0.4s ease-out both;
+  left: 6%;
+}
+
+/* Scrollable inner container */
+.glass-content-wrapper {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  box-sizing: border-box;
+  max-height: 100%;
+}
+
+/* Hide scrollbar unless scrolling */
+.glass-content-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.glass-content-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Title section */
+.glass-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+.glass-modal-title {
+  color: #1560BD;
+  font-family: 'Winky', cursive;
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.glass-title-icon {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+/* Grid view */
+.glass-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+/* Project card */
+.glass-project-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.image-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.glass-project-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.glass-project-title {
+  margin: 10px 0 5px 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.glass-project-description {
+  color: #666;
+  font-size: 1rem;
+  font-family: 'Winky', cursive;
+  padding: 0 5px;
+}
+
+.glass-project-description2 {
+  color: #333;
+  font-size: 1.2rem;
+  font-family: 'Winky', cursive;
+  text-align: justify;
+}
+
+/* Detail layout */
+.glass-project-detail-row {
+  position: relative; /* to contain absolutely positioned children */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  padding-bottom: 3.5rem; /* to avoid content under button */
+}
+
+.glass-detail-image-wrapper {
+  flex: 1 1 40%;
+  max-width: 500px;
+}
+
+.glass-detail-image {
+  width: 100%;
+  margin-top:5%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.glass-detail-content {
+  flex: 1 1 50%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  text-align: left;
+}
+
+/* Section inside detail */
+.glass-detail-section {
+  margin-bottom: 20px;
+}
+
+.glass-section-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #1560BD;
+  font-family: 'Winky', cursive;
+  margin-bottom: 0.5rem;
+}
+
+/* Tech tags */
+.glass-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.glass-tech-pill {
+  background: #1560BD;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Explore button */
+.glass-explore-button {
+  margin-top: 3rem;
+  margin-left: 10rem;
+  background-color: #0e9037;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.glass-explore-button:hover {
+  background-color: #0e3a7c;
+}
+
+.glass-return-button {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background-color: #1560BD;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0; /* remove any margin so positioning is exact */
+  z-index: 10;
+}
+
+.glass-return-button:hover {
+  background-color: #0e3a7c;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .glass-detail-image-wrapper,
+  .glass-detail-content {
+    width: 100%;
+    max-width: 90%;
+  }
+  .glass-modal-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-detail-content {
+    font-size: 0.95rem;
+  }
+  .glass-project-description2 {
+    font-size: 1rem;
+  }
+  .glass-section-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-modal-title {
+    font-size: 2.2rem;
+  }
+  .glass-project-title {
+    font-size: 1.2rem;
+  }
+  .glass-project-description {
+    font-size: 0.9rem;
+  }
+}
+/* 1. Modal wrapper that fills most of the viewport */
+.glass-modal-content {
+  height: 90vh;                     /* Limit height */
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;                 /* Prevent content overflow */
+  position: relative;
+  animation: fadeInScale 0.4s ease-out both;
+}
+
+/* 2. Scrollable container inside modal */
+.glass-scrollable-container {
+  flex-grow: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding-right: 8px;/* Space for scrollbar */
+  padding-top:10%;
+  box-sizing: border-box;
+}
+
+/* Optional: scrollbar styles */
+.glass-scrollable-container::-webkit-scrollbar {
+  width: 6px;
+}
+.glass-scrollable-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+.close-button {
+  position: absolute;
+  bottom: 1.5rem;  /* adjust vertical spacing */
+  left: 1.5rem;    /* adjust horizontal spacing */
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #a70909;
+  color: #fff;
+  cursor: pointer;
+  width: auto;      /* prevent full width */
+  min-width: 80px;  /* optional: set min width */
+}

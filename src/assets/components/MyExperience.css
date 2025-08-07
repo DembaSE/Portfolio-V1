@@ -1,0 +1,118 @@
+Copier.glass-modal-contentEX {
+  position: relative;
+  padding: 2.5rem 2rem;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  width: 90%;
+  max-width: 1000px;
+  height: 90vh; /* Set height to viewport height */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.timeline {
+  flex: 1; /* Allow the timeline to grow and shrink as needed */
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  max-width: 850px;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+/* === Title section === */
+.glass-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+.glass-modal-title {
+  color: #1560BD;
+  font-family: 'Winky', cursive;
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.glass-title-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* === Each timeline item row === */
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* === Larger logos === */
+.timeline-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* === Experience content box === */
+.timeline-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  transition: transform 0.2s ease;
+}
+
+.timeline-content:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* === Clickable card wrapper === */
+.timeline-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.timeline-content h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  font-size: 1.4rem;
+  color: #1560BD;
+}
+
+.timeline-content p {
+  margin: 0.2rem 0;
+  line-height: 1.6;
+  color: #333;
+  font-size: 0.98rem;
+}
+
+/* === Optional quote/testimonial block === */
+.quote {
+  margin-top: 2rem;
+  font-style: italic;
+  background: rgba(21, 96, 189, 0.05);
+  padding: 1rem 1.5rem;
+  border-left: 4px solid #1560BD;
+  border-radius: 8px;
+  color: #333;
+  max-width: 600px;
+  text-align: left;
+}

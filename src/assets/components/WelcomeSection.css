@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:wght@400;700&display=swap');
+
+/* Terminal-style typewriter container */
+.terminal-typewriter {
+  background-color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1rem, 2.5vw, 2rem); /* Responsive text size only */
+  padding: 1rem 1.5rem;
+  border-radius: 20px;
+  display: block;
+  white-space: pre-wrap;
+  color: #00ff00;
+  min-height: 200px;
+  position: relative;
+  word-wrap: break-word;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Dynamic text being typed */
+.terminal-text {
+  display: inline;
+  color: #00ff00;
+}
+
+/* Blinking cursor */
+.terminal-cursor {
+  color: #00ff00;
+  font-weight: bold;
+  margin-left: 4px;
+  animation: blink 1s steps(1) infinite;
+}
+
+/* Cursor blink animation */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Optional for future paragraph or signature styling */
+.intro-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  line-height: 1.6;
+  color: #000;
+}
+
+.intro-text strong {
+  font-weight: 700;
+}
+
+.signature {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #000;
+  margin-top: 1rem;
+  display: block;
+}
