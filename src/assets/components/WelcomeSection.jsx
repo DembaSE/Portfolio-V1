@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import DembaImage from '../Demba.jpg';
 import './WelcomeSection.css';
 
-const fullText = ` Hello World! 🌎 🚀
+const fullText = `$ Hello World! 🌎 🚀
 I'm Demba, a junior software engineer with a passion for elegant design and intelligent systems. Recently graduated with an MSc in Software Engineering from Sweden, I specialize in UI/UX, front-end development, and mobile development. With a strong interest in Artificial Intelligence, Machine Learning, and a focus on design, I love crafting experiences that are both functional and human-centered.
 
 Let’s build something great and beautiful ✨!`;
