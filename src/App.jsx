@@ -254,7 +254,7 @@ function ScrollHintController() {
     const interval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastScroll = currentTime - lastScrollTime.current;
-      if (!showHint && timeSinceLastScroll >= 5000) {
+      if (!showHint && timeSinceLastScroll >= 10000) {
         setShowHint(true);
       }
     }, 200);
