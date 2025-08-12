@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Suspense, useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
-import { ScrollControls, Scroll, useScroll } from '@react-three/drei';
+import { ScrollControls, Scroll, useScroll, Html } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { motion, useMotionValue, animate, AnimatePresence } from 'framer-motion';
 import CursorFollowCamera from './assets/controls/CursorFollowCamera';
@@ -10,7 +10,7 @@ import GalaxyBackground from './assets/canvas/GalaxyBackground';
 import WelcomeSection from './assets/components/WelcomeSection';
 import InfoCardsSection from './assets/components/InfoCardsSection';
 
-// Slide to Unlock Component
+// --- Slide to Unlock ---
 function SlideToUnlock({ onUnlock }) {
   const x = useMotionValue(0);
   const trackRef = useRef(null);
@@ -118,6 +118,7 @@ function SlideToUnlock({ onUnlock }) {
             zIndex: 3,
             letterSpacing: '1px',
             whiteSpace: 'nowrap',
+            display: 'inline-block', // <-- FIX ADDED HERE
           }}
         >
           → Slide to Unlock
@@ -127,7 +128,7 @@ function SlideToUnlock({ onUnlock }) {
   );
 }
 
-// Loading Spinner Component
+// --- Loading Spinner ---
 function LoadingSpinner() {
   return (
     <div
@@ -147,7 +148,7 @@ function LoadingSpinner() {
   );
 }
 
-// Scene Components
+// --- Scene Background ---
 function SceneBackground() {
   const { scene } = useThree();
   useFrame(() => {
@@ -156,6 +157,7 @@ function SceneBackground() {
   return null;
 }
 
+// --- Camera Controller ---
 function CameraController() {
   const scroll = useScroll();
   const { camera } = useThree();
@@ -167,6 +169,7 @@ function CameraController() {
   return null;
 }
 
+// --- Lights ---
 function Lights() {
   return (
     <>
@@ -176,6 +179,7 @@ function Lights() {
   );
 }
 
+// --- GLB Model ---
 function Model({ setCanvasLoaded }) {
   const gltf = useLoader(GLTFLoader, '/models/earth.glb');
   const mixer = useRef();
@@ -204,9 +208,7 @@ function Model({ setCanvasLoaded }) {
     }
 
     return () => {
-      if (mixer.current) {
-        mixer.current.stopAllAction();
-      }
+      mixer.current?.stopAllAction();
     };
   }, [gltf, setCanvasLoaded]);
 
@@ -226,7 +228,87 @@ function Model({ setCanvasLoaded }) {
   );
 }
 
-// Main App
+// --- Scroll Hint Controller ---
+function ScrollHintController() {
+  const scroll = useScroll();
+  const [showHint, setShowHint] = useState(false);
+  const lastScrollTime = useRef(Date.now());
+  const lastScrollOffset = useRef(0);
+
+  // Track scroll offset and reset timer when significant scrolling occurs
+  useFrame(() => {
+    if (scroll.offset !== null) {
+      const scrollThreshold = 0.01; // Define a threshold for scroll changes
+      if (Math.abs(scroll.offset - lastScrollOffset.current) > scrollThreshold) {
+        lastScrollTime.current = Date.now();
+        lastScrollOffset.current = scroll.offset;
+        if (showHint) {
+          setShowHint(false);
+        }
+      }
+    }
+  });
+
+  // Timer to check inactivity
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTime = Date.now();
+      const timeSinceLastScroll = currentTime - lastScrollTime.current;
+      if (!showHint && timeSinceLastScroll >= 5000) {
+        setShowHint(true);
+      }
+    }, 200);
+    return () => clearInterval(interval);
+  }, [showHint]);
+
+  return showHint ? (
+    <Html
+      style={{
+        position: 'fixed',
+        top: '400px',
+        left: '50%',
+        transform: 'translateX(-10%)',
+        pointerEvents: 'none',
+        userSelect: 'none',
+        zIndex: 10000,
+      }}
+      transform={false}
+      occlude={false}
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          color: '#00ccff',
+          fontFamily: "'Orbitron', sans-serif",
+          textShadow: '0 0 10px #00ffaa',
+        }}
+      >
+        <motion.div
+          animate={{ y: [0, 15, 0] }}
+          transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+          style={{
+            fontSize: '48px', // Increased font size for the arrow
+            background: 'linear-gradient(90deg, #00ff99, #00ccff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            filter: 'drop-shadow(0 0 6px #00ffaa)',
+          }}
+        >
+          ↓
+        </motion.div>
+      </motion.div>
+    </Html>
+  ) : null;
+}
+
+
+
+
+// --- Main App ---
 export default function App() {
   const [unlocked, setUnlocked] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
@@ -234,9 +316,7 @@ export default function App() {
   return (
     <div style={{ width: '100vw', height: '100vh', backgroundColor: '#0B1E3F' }}>
       <AnimatePresence>
-        {!unlocked && (
-          <SlideToUnlock key="lockscreen" onUnlock={() => setUnlocked(true)} />
-        )}
+        {!unlocked && <SlideToUnlock key="lockscreen" onUnlock={() => setUnlocked(true)} />}
       </AnimatePresence>
       <AnimatePresence>
         {unlocked && (
@@ -297,6 +377,7 @@ export default function App() {
                     </div>
                   </div>
                 </Scroll>
+                <ScrollHintController />
                 <CameraController />
               </ScrollControls>
               <CursorFollowCamera />
@@ -308,16 +389,12 @@ export default function App() {
   );
 }
 
-// Global CSS styles for spinner animation
+// Global CSS animations
 const styleElement = document.createElement('style');
 styleElement.textContent = `
   @keyframes shine {
-    0% {
-      background-position: -200% center;
-    }
-    100% {
-      background-position: 200% center;
-    }
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
   }
   @keyframes spin {
     to { transform: rotate(360deg); }
