@@ -265,7 +265,7 @@ function ScrollHintController() {
     <Html
       style={{
         position: 'fixed',
-        top: '400px',
+        top: '300px',
         left: '50%',
         transform: 'translateX(-10%)',
         pointerEvents: 'none',
